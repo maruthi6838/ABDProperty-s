@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABD Property's - Real Estate</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleVis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f8f8;
+        }
+        .navbar {
+            transition: all 0.3s ease;
+        }
+        /* Custom styles for the responsive video background section */
+        .video-background {
+            position: relative;
+            height: 60vh; /* Responsive height */
+            min-height: 400px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .video-background video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+        }
+        .video-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: 1;
+        }
+        .video-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            padding: 1rem;
+        }
+        .chat-container {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .chat-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chat-container::-webkit-scrollbar-thumb {
+            background-color: #9ca3af;
+            border-radius: 10px;
+        }
+        /* Make iframes responsive */
+        .map-iframe-container {
+            overflow: hidden;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            position: relative;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+        .map-iframe-container iframe {
+            border: 0;
+            height: 100%;
+            left: 0;
+            position: absolute;
+            top: 0;
+            width: 100%;
+        }
+    </style>
+
+</head>
+<body class="antialiased">
+
+    <!-- Navigation -->
+    <header class="sticky top-0 z-50 bg-white shadow-lg">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
+            <div class="text-2xl font-extrabold text-gray-900">
+                ABD<span class="text-emerald-600">Property's</span>
+            </div>
+
+            <!-- Desktop Links -->
+            <ul class="hidden md:flex space-x-6">
+                <li><a href="index.html" class="text-gray-600 hover:text-emerald-600 font-medium transition duration-150">Home</a></li>
+                <li><a href="about.html" class="text-gray-600 hover:text-emerald-600 font-medium transition duration-150">About</a></li>
+                <li><a href="Projects.html" class="text-gray-600 hover:text-emerald-600 font-medium transition duration-150">Projects</a></li>
+                <li><a href="service.html" class="text-gray-600 hover:text-emerald-600 font-medium transition duration-150">Services</a></li>
+                <li><a href="contact.html" class="text-gray-600 hover:text-emerald-600 font-medium transition duration-150">Contact Us</a></li>
+            </ul>
+
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden">
+                <button id="mobile-menu-btn" aria-controls="mobile-menu" aria-expanded="false" class="p-2 rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    <!-- Hamburger -->
+                    <svg id="menu-open-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                    <!-- Close -->
+                    <svg id="menu-close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden border-t border-gray-100 bg-white">
+            <div class="px-4 py-3 space-y-1">
+                <a href="index.html" class="block text-gray-700 hover:bg-gray-50 rounded-md px-3 py-2 font-medium">Home</a>
+                <a href="about.html" class="block text-gray-700 hover:bg-gray-50 rounded-md px-3 py-2 font-medium">About</a>
+                <a href="Projects.html" class="block text-gray-700 hover:bg-gray-50 rounded-md px-3 py-2 font-medium">Projects</a>
+                <a href="service.html" class="block text-gray-700 hover:bg-gray-50 rounded-md px-3 py-2 font-medium">Services</a>
+                <a href="contact.html" class="block text-gray-700 hover:bg-gray-50 rounded-md px-3 py-2 font-medium">Contact Us</a>
+            </div>
+        </div>
+
+        <script>
+            (function () {
+                const btn = document.getElementById('mobile-menu-btn');
+                const menu = document.getElementById('mobile-menu');
+                const openIcon = document.getElementById('menu-open-icon');
+                const closeIcon = document.getElementById('menu-close-icon');
+
+                if (!btn || !menu) return;
+
+                btn.addEventListener('click', () => {
+                    const isHidden = menu.classList.toggle('hidden');
+                    openIcon.classList.toggle('hidden');
+                    closeIcon.classList.toggle('hidden');
+                    btn.setAttribute('aria-expanded', String(!isHidden));
+                });
+
+                // Close mobile menu on resize to larger screens
+                window.addEventListener('resize', () => {
+                    if (window.innerWidth >= 768 && !menu.classList.contains('hidden')) {
+                        menu.classList.add('hidden');
+                        openIcon.classList.remove('hidden');
+                        closeIcon.classList.add('hidden');
+                        btn.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            })();
+        </script>
+    </header>
+    
+    <!-- Main Content -->
+    <main>
+        
+        <!-- Hero Section with Video Background -->
+        <div class="video-background mb-12">
+            <video class="elementor-background-video-hosted elementor-html5-video" autoplay="" muted="" playsinline="" loop=""
+                   src="https://adurigroup.com/wp-content/uploads/2022/06/My-Movie_2.mp4#t=1,60" 
+                   onerror="this.style.display='none'; this.closest('.video-background').style.backgroundImage='url(https://placehold.co/1200x600/10b981/ffffff?text=Premium+Real+Estate)'; this.closest('.video-background').style.backgroundSize='cover';"></video>
+           
+            <div class="video-overlay"></div>
+            <div class="video-content">
+                <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight">Welcome To <span class="text-emerald-400">Aduri Group</span></h1>
+                <h5 class="mt-4 text-lg sm:text-2xl font-light">Most Trusted Real Estate Company In Telangana</h5>
+            </div>
+        </div>
+
+        <!-- About Section -->
+        <section class="max-w-4xl mx-auto px-4 py-8 text-center">
+            <p class="text-lg text-gray-700 leading-relaxed"> 
+                The ABD Property's is a brand that prides itself in high client satisfaction, dependability, economical, unmatched assistance, and a huge scope for advancement. We have a nationally recognized valuation and award-winning incorporation which has earned the ET Excellence awards of 2020-21.
+            </p>                      
+        </section>
+
+        <!-- Projects Heading -->
+        <section class="max-w-7xl mx-auto px-4 py-12">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-2">OUR PROJECTS</h2>
+            <div class="flex justify-center mb-10">
+                <span class="inline-block h-1 w-20 bg-emerald-600 rounded-full"></span>
+            </div>
+            
+            <!-- Project Cards Placeholder -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden transition hover:shadow-xl duration-300">
+                    <img src="https://placehold.co/600x400/10b981/ffffff?text=Bengaluru+Highway" class="w-full h-48 object-cover" alt="Bengaluru Highway">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Green Acres Residence</h3>
+                        <p class="text-gray-600 text-sm">Exclusive villa plots near Hyderabad, offering serene living and high future value.</p>
+                        <a href="#" class="mt-3 inline-block text-emerald-600 hover:text-emerald-700 font-medium">View Details &rarr;</a>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden transition hover:shadow-xl duration-300">
+                    <img src="https://placehold.co/600x400/059669/ffffff?text=Mumbai+Highway" class="w-full h-48 object-cover" alt="">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Highway Facing</h3>
+                        <p class="text-gray-600 text-sm">Prime commercial spaces designed for maximum visibility and corporate growth.</p>
+                        <a href="#" class="mt-3 inline-block text-emerald-600 hover:text-emerald-700 font-medium">View Details &rarr;</a>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden transition hover:shadow-xl duration-300">
+                    <img src="https://placehold.co/600x400/047857/ffffff?text=Vijayawada+Highway" class="w-full h-48 object-cover" alt="Affordable Homes">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">City View Apartments</h3>
+                        <p class="text-gray-600 text-sm">Modern, affordable apartments with excellent connectivity to the city center.</p>
+                        <a href="#" class="mt-3 inline-block text-emerald-600 hover:text-emerald-700 font-medium">View Details &rarr;</a>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden transition hover:shadow-xl duration-300">
+                    <img src="https://placehold.co/600x400/047857/ffffff?text=Warangal+Highway" class="w-full h-48 object-cover" alt="Affordable Homes">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">City View Apartments</h3>
+                        <p class="text-gray-600 text-sm">Modern, affordable apartments with excellent connectivity to the city center.</p>
+                        <a href="#" class="mt-3 inline-block text-emerald-600 hover:text-emerald-700 font-medium">View Details &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Customer Testimonials Section -->
+        <section class="py-16 bg-gray-100 mt-12">
+            <div class="max-w-7xl mx-auto px-4">
+                <h4 class="text-3xl font-bold text-center text-gray-800 mb-2">WHAT OUR CUSTOMERS SAY?</h4>
+                <div class="flex justify-center mb-10">
+                    <span class="inline-block h-1 w-20 bg-emerald-600 rounded-full"></span>
+                </div>
+                
+                <!-- Testimonial Grid -->
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-emerald-500">
+                        <p class="italic text-gray-700">"The best decision we made was buying a plot with ABD. Professional service, clear documentation, and excellent post-sale support. Truly the most trusted in Telangana!"</p>
+                        <p class="mt-4 font-semibold text-gray-900">- Mrs. Priya K.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-emerald-500">
+                        <p class="italic text-gray-700">"We invested in their commercial tower, and the returns have been fantastic. The team provided expert guidance on market analysis and long-term viability."</p>
+                        <p class="mt-4 font-semibold text-gray-900">- Mr. Sriram V.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-md border-t-4 border-emerald-500">
+                        <p class="italic text-gray-700">"From site visit to registration, the process was seamless. They live up to their reputation for dependability and transparent dealings."</p>
+                        <p class="mt-4 font-semibold text-gray-900">- Dr. Harish M.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Company at a Glance / Counters Section -->
+        <section class="py-16 bg-emerald-600 text-white relative overflow-hidden">
+            <svg class="absolute top-0 w-full h-12" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 283.5 19.6" preserveAspectRatio="none" style="fill: #f8f8f8;">
+                <path d="M0 0L0 1.2 141.8 4 283.5 1.2 283.5 0z"></path>
+                <path style="opacity:0.33" d="M0 0L0 6.4 141.8 4 283.5 6.4 283.5 0z"></path>
+                <path style="opacity:0.33" d="M0 0L0 12.6 141.8 4 283.5 12.6 283.5 0z"></path>
+                <path style="opacity:0.33" d="M0 0L0 18.8 141.8 4.1 283.5 18.8 283.5 0z"></path>
+            </svg>
+
+            <div class="max-w-7xl mx-auto px-4 pt-8 text-center">
+                <h3 class="text-3xl font-bold mb-12">COMPANY AT A GLANCE</h3>
+                
+                <div class="grid sm:grid-cols-3 gap-8">
+                    <!-- Counter 1: Projects -->
+                    <div class="p-4">
+                        <div class="text-5xl font-extrabold" data-to-value="50" id="counter1">0</div>
+                        <div class="text-xl font-medium mt-2">Projects</div>
+                    </div>
+                    <!-- Counter 2: Years of existence -->
+                    <div class="p-4">
+                        <div class="text-5xl font-extrabold" data-to-value="23" id="counter2">0</div>
+                        <div class="text-xl font-medium mt-2">Years of Existence</div>
+                    </div>
+                    <!-- Counter 3: Associates -->
+                    <div class="p-4">
+                        <div class="text-5xl font-extrabold" data-to-value="50000" id="counter3">0</div>
+                        <div class="text-xl font-medium mt-2">Associates </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Map Locations Section -->
+        <section class="max-w-7xl mx-auto px-4 py-16">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid md:grid-cols-3 gap-8">
+                    
+                    <!-- Map 1: Corporate Office -->
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-gray-800 mb-4">Corporate Office</h2>
+                        <div class="map-iframe-container">
+                            <iframe loading="lazy" src="https://maps.google.com/maps?q=Aduri%20Infra%20Pvt.%20Ltd&amp;t=m&amp;z=14&amp;output=embed&amp;iwloc=near" title="Aduri Infra Pvt. Ltd" aria-label="Aduri Infra Pvt. Ltd"></iframe>
+                        </div>
+                    </div>
+                    
+                    <!-- Map 2: Banjara Hills Branch -->
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-gray-800 mb-4">Banjara Hills Branch</h2>
+                        <div class="map-iframe-container">
+                            <iframe loading="lazy" src="https://maps.google.com/maps?q=Aduri%20Group-%20Banjara%20Hills%20branch&amp;t=m&amp;z=17&amp;output=embed&amp;iwloc=near" title="Aduri Group- Banjara Hills branch" aria-label="Aduri Group- Banjara Hills branch"></iframe>
+                        </div>
+                    </div>
+
+                    <!-- Map 3: L.B Nagar Branch -->
+                    <div class="text-center">
+                        <h2 class="text-xl font-bold text-gray-800 mb-4">L.B Nagar Branch</h2>
+                        <div class="map-iframe-container">
+                            <iframe loading="lazy" src="https://maps.google.com/maps?q=Aduri%20Group-LB%20Nagar%20Branch%20Office&amp;t=m&amp;z=17&amp;output=embed&amp;iwloc=near" title="Aduri Group-LB Nagar Branch Office" aria-label="Aduri Group-LB Nagar Branch Office"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-6 text-center text-white">
+        <p class="text-sm">© 2025 ABD Property's Group. All rights reserved.</p>
+    </footer>
+    
+    <!-- Real Estate Consultant Chatbot -->
+    <div class="fixed bottom-4 right-4 z-50">
+        <!-- Chat Button -->
+        <button id="chat-toggle-btn" class="bg-emerald-600 hover:bg-emerald-700 text-white p-4 rounded-full shadow-xl transition transform hover:scale-105" aria-label="Open Real Estate Consultant Chat">
+            <svg class="w-6 h-6"  stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+        </button>
+        
+
+
+        <!-- Chat Window -->
+        <div id="chat-window" class="hidden absolute bottom-0 right-0 w-80 bg-white rounded-xl shadow-2xl transition-all duration-300 transform translate-y-full opacity-0 pointer-events-none">
+            <div class="flex flex-col h-[450px]">
+                <!-- Chat Header -->
+                <div class="bg-emerald-600 text-white p-4 rounded-t-xl flex justify-between items-center">
+                    <h3 class="font-bold text-lg">Property Consultant ✨</h3>
+                    <button id="chat-close-btn" class="text-white hover:text-emerald-100" aria-label="Close Chat">
+                        <svg class="w-5 h-5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+
+                <!-- Chat Messages Container -->
+                <div id="chat-messages" class="chat-container flex-grow p-4 space-y-4">
+                    <!-- Initial AI message -->
+                    <div class="flex justify-start">
+                        <div class="bg-gray-200 text-gray-800 p-3 rounded-xl rounded-bl-none max-w-[85%]">
+                            Welcome! I'm ABD Property's **market trends in Telangana**, **investment potential**, or about **ABD Property's** projects!
+                        </div>
+                    </div>
+                    <!-- Messages will be appended here -->
+                </div>
+
+                <!-- Chat Input -->
+                <div class="p-4 border-t border-gray-200">
+                    <div class="relative">
+                        <label for="chat-input"></label>
+                        <input type="text" id="chat-input" placeholder="Type your question..." class="w-full p-3 pr-12 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 text-sm">
+                        <button id="chat-send-btn" class="absolute right-2 top-1/2 transform -translate-y-1/2 text-emerald-600 hover:text-emerald-700 disabled:opacity-50" disabled aria-label="Send message">
+                            <svg class="w-6 h-6"  stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </button>
+                    </div>
+                    <div id="chat-loading" class="text-xs text-center text-gray-500 mt-2 hidden">Consultant is gathering market data...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        // --- Global Setup ---
+        const apiKey = ""; // API key is left empty as it is provided by the canvas environment
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+        // --- DOM Elements ---
+        const chatToggleBtn = document.getElementById('chat-toggle-btn');
+        const chatCloseBtn = document.getElementById('chat-close-btn');
+        const chatWindow = document.getElementById('chat-window');
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const chatSendBtn = document.getElementById('chat-send-btn');
+        const chatLoading = document.getElementById('chat-loading');
+
+        // --- Utility Functions ---
+
+        /**
+         * Generic fetch function with exponential backoff for API calls.
+         */
+        async function fetchWithRetry(url, options, maxRetries = 3) {
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(url, options);
+                    if (!response.ok) {
+                        const errorBody = await response.json();
+                        throw new Error(`API call failed with status ${response.status}: ${JSON.stringify(errorBody)}`);
+                    }
+                    return response;
+                } catch (error) {
+                    if (i === maxRetries - 1) throw error;
+                    const delay = Math.pow(2, i) * 1000;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+            }
+        }
+        
+        /**
+         * Smoothly scrolls the chat window to the bottom.
+         */
+        function scrollToBottom() {
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        /**
+         * Appends a message to the chat window.
+         * @param {string} text - The message content.
+         * @param {string} sender - 'user' or 'ai'.
+         */
+        function appendMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `flex ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
+            
+            const bubbleDiv = document.createElement('div');
+            const bgColor = sender === 'user' ? 'bg-emerald-600 text-white' : 'bg-gray-200 text-gray-800';
+            const borderRadius = sender === 'user' ? 'rounded-lg rounded-br-none' : 'rounded-xl rounded-bl-none';
+            
+            bubbleDiv.className = `${bgColor} p-3 ${borderRadius} max-w-[85%]`;
+            bubbleDiv.innerHTML = text; // Use innerHTML to render line breaks if any
+            
+            messageDiv.appendChild(bubbleDiv);
+            chatMessages.appendChild(messageDiv);
+            scrollToBottom();
+        }
+
+        // --- Chatbot Logic ---
+
+        /**
+         * Toggles the visibility and animation of the chat window.
+         */
+        function toggleChat() {
+            const isHidden = chatWindow.classList.contains('hidden');
+            if (isHidden) {
+                chatWindow.classList.remove('hidden');
+                setTimeout(() => {
+                    chatWindow.classList.remove('translate-y-full', 'opacity-0', 'pointer-events-none');
+                    chatWindow.classList.add('translate-y-0', 'opacity-100');
+                    chatInput.focus();
+                }, 10);
+            } else {
+                chatWindow.classList.remove('translate-y-0', 'opacity-100');
+                chatWindow.classList.add('translate-y-full', 'opacity-0');
+                setTimeout(() => {
+                    chatWindow.classList.add('hidden', 'pointer-events-none');
+                }, 300); // Match transition duration
+            }
+        }
+
+        /**
+         * Handles sending the user message and calling the Gemini API.
+         */
+        async function handleSendMessage() {
+            const userQuery = chatInput.value.trim();
+            if (!userQuery) return;
+
+            appendMessage(userQuery, 'user');
+            chatInput.value = '';
+            chatSendBtn.disabled = true;
+            chatLoading.classList.remove('hidden');
+
+            const systemPrompt = "You are a professional and friendly Real Estate Consultant for 'ABD Property's' group, a highly trusted company in Telangana. Your primary goal is to provide insightful, helpful, and optimistic advice regarding real estate investment, especially focusing on market trends in Telangana. Your answers should be clear, persuasive, and based on current market data. Keep responses concise (max 150 words).";
+            
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+                // Use Google Search grounding for up-to-date market information
+                tools: [{ "google_search": {} }],
+            };
+
+            try {
+                const response = await fetchWithRetry(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                const generatedText = result.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                if (generatedText) {
+                    // Replace Markdown links with simple text (or implement better link parsing if needed)
+                    const cleanText = generatedText.replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1');
+                    appendMessage(cleanText, 'ai');
+                } else {
+                    appendMessage("I apologize, I seem to have run into an issue. Please try rephrasing your question.", 'ai');
+                }
+
+            } catch (error) {
+                console.error('Gemini API Error:', error);
+                appendMessage("A network or server error occurred. Please check your connection and try again.", 'ai');
+            } finally {
+                chatLoading.classList.add('hidden');
+                chatSendBtn.disabled = false;
+                chatInput.focus();
+            }
+        }
+
+        // --- Counter Animation Logic ---
+        function animateCounter(id, targetValue) {
+            const element = document.getElementById(id);
+            if (!element) return;
+            
+            let start = 0;
+            const duration = 1500;
+            const startTimestamp = performance.now();
+            const suffix = id === 'counter3' ? '+' : '';
+
+            function step(timestamp) {
+                const elapsed = timestamp - startTimestamp;
+                const progress = Math.min(elapsed / duration, 1);
+                
+                const currentValue = Math.floor(progress * targetValue);
+                
+                // Add comma separator for counter3
+                const displayValue = id === 'counter3' 
+                    ? currentValue.toLocaleString()
+                    : currentValue.toString();
+
+                element.textContent = displayValue + suffix;
+
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                } else {
+                    element.textContent = targetValue.toLocaleString() + suffix; // Ensure final value is exact
+                }
+            }
+
+            window.requestAnimationFrame(step);
+        }
+
+        // --- Event Listeners and Initialization ---
+
+        // Chat Toggles
+        chatToggleBtn.addEventListener('click', toggleChat);
+        chatCloseBtn.addEventListener('click', toggleChat);
+
+        // Chat Input and Send Button
+        chatInput.addEventListener('input', () => {
+            chatSendBtn.disabled = chatInput.value.trim() === '';
+        });
+        chatSendBtn.addEventListener('click', handleSendMessage);
+        chatInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !chatSendBtn.disabled) {
+                handleSendMessage();
+            }
+        });
+
+        // Initialize on load
+        window.onload = function() {
+            // Start counter animations on load
+            animateCounter('counter1', 50);
+            animateCounter('counter2', 21);
+            animateCounter('counter3', 50000);
+        };
+    </script>
+</body>
+</html>

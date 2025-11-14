@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - ABD Proparty's</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f7f6;
+        }
+    </style>
+</head>
+<body class="antialiased flex flex-col min-h-screen">
+<!-- Navigation -->
+<header class="sticky top-0 z-50 bg-white shadow-lg">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
+        <div class="text-2xl font-extrabold text-gray-900">
+            ABD<span class="text-emerald-600">Proparty's</span>
+        </div>
+        <ul class="hidden md:flex space-x-6">
+            <li><a href="index.html" class="text-gray-600 hover:text-emerald-600 font-medium transition duration-150">Home</a></li>
+            <li><a href="about.html" class="text-gray-600 hover:text-emerald-600 font-medium transition duration-150">About</a></li>
+            <li><a href="projects.html" class="text-gray-600 hover:text-emerald-600 font-medium transition duration-150">Projects</a></li>
+            <li><a href="service.html" class="text-emerald-600 font-bold transition duration-150">Services</a></li>
+            <li><a href="contact.html" class="text-gray-600 hover:text-emerald-600 font-medium transition duration-150">Contact Us</a></li>
+        </ul>
+        <div class="md:hidden">
+            <button id="mobile-menu-button" class="text-gray-600 hover:text-emerald-600 focus:outline-none" title="Toggle mobile menu">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </div>
+    </nav>
+    <div id="mobile-menu" class="hidden md:hidden">
+        <ul class="flex flex-col space-y-2 p-4 bg-white shadow-lg">
+            <li><a href="index.html" class="text-gray-600 hover:text-emerald-600">Home</a></li>
+            <li><a href="about.html" class="text-gray-600 hover:text-emerald-600">About</a></li>
+            <li><a href="projects.html" class="text-gray-600 hover:text-emerald-600">Projects</a></li>
+            <li><a href="service.html" class="text-emerald-600 font-bold">Services</a></li>
+            <li><a href="contact.html" class="text-gray-600 hover:text-emerald-600">Contact Us</a></li>
+        </ul>
+    </div>
+</header>
+
+<script>
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+</script>
+    
+    <!-- Main Content -->
+    <main class="flex-grow">
+        
+        <!-- Hero Section -->
+        <section class="bg-emerald-600 py-16 mb-16 shadow-xl">
+            <div class="max-w-7xl mx-auto px-4 text-center text-white">
+                <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight">Our Comprehensive Real Estate Services</h1>
+                <p class="mt-4 text-xl text-emerald-100 max-w-3xl mx-auto">From residential sales to large-scale property management, we provide expert guidance every step of the way.</p>
+            </div>
+        </section>
+
+        <!-- Services Grid -->
+        <section class="max-w-6xl mx-auto px-4 mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800">How We Serve You</h2>
+                <p class="mt-3 text-lg text-gray-600">Tailored solutions for investors, buyers, and owners.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                
+                <!-- Service Card 1: Sales & Acquisition -->
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 border-t-4 border-emerald-500">
+                    <div class="text-emerald-600 mb-4 mx-auto w-12 h-12 flex items-center justify-center rounded-full bg-emerald-100">
+                        <!-- Icon: Home/House -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3 text-center">Sales & Acquisition</h3>
+                    <p class="text-gray-600 text-sm">Expert representation for buying or selling residential and commercial properties. We handle negotiations to secure the best value for you.</p>
+                </div>
+
+                <!-- Service Card 2: Property Management -->
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 border-t-4 border-emerald-500">
+                    <div class="text-emerald-600 mb-4 mx-auto w-12 h-12 flex items-center justify-center rounded-full bg-emerald-100">
+                        <!-- Icon: Key/Security -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 7a2 2 0 012 2v5.5a2.5 2.5 0 01-2.5 2.5h-9A2.5 2.5 0 013.5 14.5V9a2 2 0 012-2h9z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M7 11h2m3 0h2" />
+                            <circle cx="17.5" cy="6.5" r="2.5" fill="currentColor" stroke="none" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3 text-center">Property Management</h3>
+                    <p class="text-gray-600 text-sm">Our services 10 year's FREE MAINTENANCE, 24/7 SECURITY, and regulatory compliance. Maximize rental income and minimize hassle. </p>
+                </div>
+
+                <!-- Service Card 3: Investment Consulting -->
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 border-t-4 border-emerald-500">
+                    <div class="text-emerald-600 mb-4 mx-auto w-12 h-12 flex items-center justify-center rounded-full bg-emerald-100">
+                        <!-- Icon: Chart/Growth -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3 text-center">Investment Consulting</h3>
+                    <p class="text-gray-600 text-sm">Get data-driven advice on market trends, portfolio growth, and high-ROI opportunities in the current real estate landscape.</p>
+                </div>
+
+                <!-- Service Card 4: Documentation & Legal -->
+                <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 border-t-4 border-emerald-500">
+                    <div class="text-emerald-600 mb-4 mx-auto w-12 h-12 flex items-center justify-center rounded-full bg-emerald-100">
+                        <!-- Icon: Document/Check -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-9.618 3.044M2.4 12c.712 2.379 1.958 4.47 3.559 6.012a15.932 15.932 0 004.981 2.45m7.85-2.45a15.932 15.932 0 004.981-2.45c.18-.18.35-.37.51-.57" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3 text-center">Documentation & Legal</h3>
+                    <p class="text-gray-600 text-sm">We ensure all transactions are legally sound and compliant. We manage title searches, registrations, and complex legal paperwork.</p>
+                </div>
+                
+            </div>
+        </section>
+
+        <!-- Call to Action / Process Section -->
+        <section class="bg-emerald-50 py-16">
+            <div class="max-w-6xl mx-auto px-4">
+                <div class="lg:flex lg:items-center lg:space-x-12">
+                    <div class="lg:w-1/2 mb-8 lg:mb-0">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-4">Your Property Journey Starts Here</h2>
+                        <p class="text-gray-600 mb-6 text-lg">We simplify the real estate process into three easy steps to ensure a smooth and successful experience, regardless of your goal.</p>
+                        
+                        <ol class="space-y-4">
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 text-white bg-emerald-600 rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3">1</span>
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Consultation & Planning</h4>
+                                    <p class="text-sm text-gray-600">We start with a detailed consultation to understand your specific needs and goals.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 text-white bg-emerald-600 rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3">2</span>
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Execution & Search</h4>
+                                    <p class="text-sm text-gray-600">Our experts execute the plan, utilizing market insights to find or manage the ideal property.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="flex-shrink-0 text-white bg-emerald-600 rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3">3</span>
+                                <div>
+                                    <h4 class="font-semibold text-gray-900">Closing & Support</h4>
+                                    <p class="text-sm text-gray-600">We manage the closing process and provide ongoing support post-transaction.</p>
+                                </div>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div class="lg:w-1/2">
+                        <div class="p-8 bg-white rounded-xl shadow-2xl">
+                            <h3 class="text-2xl font-bold text-emerald-600 mb-4">Ready to Begin?</h3>
+                            <p class="text-gray-600 mb-6">Connect with a specialist today to discuss your unique property requirements.</p>
+                            <a href="contact.html" class="inline-block w-full text-center bg-emerald-600 text-white p-4 rounded-lg font-semibold hover:bg-emerald-700 transition duration-200 shadow-lg">
+                                Contact a Specialist Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-6 text-center text-white mt-auto">
+        <p class="text-sm">© 2025 ABD Proparty's Group. All rights reserved.</p>
+    </footer>
+</body>
+</html>
